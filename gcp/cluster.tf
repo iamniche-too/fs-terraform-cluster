@@ -201,6 +201,10 @@ resource "google_container_node_pool" "node_pool" {
       # https://cloud.google.com/kubernetes-engine/docs/how-to/protecting-cluster-metadata
       disable-legacy-endpoints = "true"
     }
+
+    tags = [ 
+      "kafka-cluster-node" 
+    ]
   }
 
   # Change how long update operations on the node pool are allowed to take
