@@ -1,6 +1,6 @@
 provider "google" {
-  credentials = file("terraform-test-262517-e35fa404a379.json")
-  project = "terraform-test-262517"
+  credentials = file("~/.gcp/kafka-k8s-trial-4287e941a38f.json")
+  project = "kafka-k8s-trial"
   region  = "europe-west2"
   zone    = "europe-west2-a"
 }
