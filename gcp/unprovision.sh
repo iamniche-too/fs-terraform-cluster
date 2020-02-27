@@ -1,1 +1,2 @@
-terraform destroy 
+terraform destroy
+cd firewall && terraform destroy
