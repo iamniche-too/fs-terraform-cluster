@@ -1,2 +1,1 @@
-terraform destroy
-cd firewall && terraform destroy
+terraform destroy -auto-approve

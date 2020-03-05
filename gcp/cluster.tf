@@ -133,7 +133,7 @@ resource "google_container_cluster" "cluster" {
 }
 
 # https://www.terraform.io/docs/providers/google/r/container_node_pool.html
-resource "google_container_node_pool" "node_pool" {
+resource "google_container_node_pool" "producer_consumer_node_pool" {
   # The location (region or zone) in which the cluster resides
   location = google_container_cluster.cluster.location
 
@@ -141,7 +141,7 @@ resource "google_container_node_pool" "node_pool" {
 
   # The name of the node pool. Instance groups created will have the cluster
   # name prefixed automatically.
-  name = "default" 
+  name = "producer-consumer-node-pool" 
 
   # The cluster to create the node pool for.
   cluster = google_container_cluster.cluster.name
@@ -170,17 +170,17 @@ resource "google_container_node_pool" "node_pool" {
   node_config {
     # The name of a Google Compute Engine machine type. Defaults to
     # n1-standard-1.
-    machine_type = var.node_pools_node_config_machine_type 
+    machine_type = "n1-standard-1" 
 
     service_account = google_service_account.default.email 
 
     # Size of the disk attached to each node, specified in GB. The smallest
     # allowed disk size is 10GB. Defaults to 100GB.
-    disk_size_gb = var.node_pools_node_config_disk_size_gb
+    disk_size_gb = 100
 
     # Type of the disk attached to each node (e.g. 'pd-standard' or 'pd-ssd').
     # If unspecified, the default disk type is 'pd-standard'
-    disk_type = var.node_pools_node_config_disk_type
+    disk_type = "pd-standard"
 
     # A boolean that represents whether or not the underlying node VMs are
     # preemptible. See the official documentation for more information.
@@ -202,8 +202,14 @@ resource "google_container_node_pool" "node_pool" {
       disable-legacy-endpoints = "true"
     }
 
+    taint {
+      key = "is-producer-consumer-node"
+      value = "true"
+      effect = "NO_SCHEDULE"
+    }
+
     tags = [ 
-      "kafka-cluster-node" 
+      "producer-consumer-node" 
     ]
   }
 
@@ -214,3 +220,4 @@ resource "google_container_node_pool" "node_pool" {
     update = "20m"
   }
 }
+
