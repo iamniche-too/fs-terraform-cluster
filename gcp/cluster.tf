@@ -202,11 +202,11 @@ resource "google_container_node_pool" "producer_consumer_node_pool" {
       disable-legacy-endpoints = "true"
     }
 
-    taint {
-      key = "is-producer-consumer-node"
-      value = "true"
-      effect = "NO_SCHEDULE"
-    }
+    #taint {
+    #  key = "is-producer-consumer-node"
+    #  value = "true"
+    #  effect = "NO_SCHEDULE"
+    #}
 
     tags = [ 
       "producer-consumer-node" 
