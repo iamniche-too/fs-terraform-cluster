@@ -103,7 +103,7 @@ resource "google_container_cluster" "cluster" {
   remove_default_node_pool = true
 
   # The number of nodes to create in this cluster (not including the Kubernetes master).
-  initial_node_count = 1
+  initial_node_count = 4 
 
   # The desired configuration options for master authorized networks. Omit the
   # nested cidr_blocks attribute to disallow external access (except the
@@ -137,7 +137,7 @@ resource "google_container_node_pool" "producer_consumer_node_pool" {
   # The location (region or zone) in which the cluster resides
   location = google_container_cluster.cluster.location
 
-  count = 1
+  count = 4 
 
   # The name of the node pool. Instance groups created will have the cluster
   # name prefixed automatically.
@@ -176,7 +176,7 @@ resource "google_container_node_pool" "producer_consumer_node_pool" {
 
     # Size of the disk attached to each node, specified in GB. The smallest
     # allowed disk size is 10GB. Defaults to 100GB.
-    disk_size_gb = 100
+    disk_size_gb = 10
 
     # Type of the disk attached to each node (e.g. 'pd-standard' or 'pd-ssd').
     # If unspecified, the default disk type is 'pd-standard'
@@ -207,6 +207,10 @@ resource "google_container_node_pool" "producer_consumer_node_pool" {
     #  value = "true"
     #  effect = "NO_SCHEDULE"
     #}
+ 
+    labels = {
+      producer-consumer-node = "true"
+    }
 
     tags = [ 
       "producer-consumer-node" 
