@@ -114,10 +114,6 @@ resource "google_container_cluster" "cluster" {
       cidr_block = "0.0.0.0/0"
       display_name = "default" 
     } 
-    #cidr_blocks { 
-    #  cidr_block = "86.8.222.61/32"
-    #  display_name = "Nic@Home"
-    #} 
   }
  
   # Change how long update operations on the cluster are allowed to take
